@@ -18,14 +18,14 @@ class Layer_Dense:
         # Remember input values
         self.inputs = inputs
         # Calculate output values from inputs, weights and biases
-        self.output = np.dot(inputs, self.weights) + self.biases
+        self.output = np.matmul(inputs, self.weights) + self.biases
 
     def backward(self, dvalues):
         # Gradients on parameters
-        self.dweights = np.dot(self.inputs.T, dvalues)
+        self.dweights = np.matmul(self.inputs.T, dvalues)
         self.dbiases = np.sum(dvalues, axis=0, keepdims=True)
         # Gradient on values
-        self.dinputs = np.dot(dvalues, self.weights.T)
+        self.dinputs = np.matmul(dvalues, self.weights.T)
 
 
 class Activation_ReLU:
@@ -78,10 +78,10 @@ class Activation_Softmax:
             single_output = single_output.reshape(-1, 1)
             # Calculate Jacobian matrix of the output
             jacobian_matrix = np.diagflat(single_output) - \
-                              np.dot(single_output, single_output.T)
+                              np.matmul(single_output, single_output.T)
             # Calculate sample-wise gradient
             # and add it to the array of sample gradients
-            self.dinputs[index] = np.dot(jacobian_matrix,
+            self.dinputs[index] = np.matmul(jacobian_matrix,
                                          single_dvalues)
 
 

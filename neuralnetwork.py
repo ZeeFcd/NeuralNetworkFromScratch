@@ -202,8 +202,6 @@ class Optimizer_SGD:
             # filled with zeros
             if not hasattr(layer, 'weight_momentums'):
                 layer.weight_momentums = np.zeros_like(layer.weights)
-                # If there is no momentum array for weights
-                # The array doesn't exist for biases yet either.
                 layer.bias_momentums = np.zeros_like(layer.biases)
 
             # Build weight updates with momentum - take previous
